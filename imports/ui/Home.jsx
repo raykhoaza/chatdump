@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
+import { Chatrooms } from '../api/Chatroom.jsx';
+import ReactDOM from 'react-dom';
 
 class Home extends Component {
   constructor() {
@@ -10,7 +12,11 @@ class Home extends Component {
   }
 
   createRoom(event){
-    
+    event.preventDefault();
+    let { roomName } = this.state;
+    Meteor.call('chatrooms.insert', roomName);
+    ReactDOM.findDOMNode(this.refs.roomNameInput).value = '';
+    //this.props.history.push('/');
   }
 
   render() {
@@ -21,7 +27,12 @@ class Home extends Component {
       <h1> Create Room </h1>
       <form onSubmit={this.createRoom.bind(this)}>
         <div>
-          <input onChange={ (e) => this.setState({ roomname: e.target.value }) } type="text" placeholder="roomname" required/>
+          <input 
+            ref="roomNameInput" 
+            onChange={ (e) => this.setState({ roomName: e.target.value }) } 
+            type="text" 
+            placeholder="roomname" required
+          />
         </div>
         <div>
           <button type="submit">Submit</button>
