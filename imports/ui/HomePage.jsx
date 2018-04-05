@@ -3,8 +3,9 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 import { Chatrooms } from '../api/Chatroom.jsx';
 import ReactDOM from 'react-dom';
+import NavBar from './Navbar.jsx';
 
-class Home extends Component {
+class HomePage extends Component {
   constructor() {
     super();
     this.state = {
@@ -21,6 +22,9 @@ class Home extends Component {
 
   render() {
     return <div>
+      <div>
+        <NavBar path={this.props.match.path}/>
+      </div>
       <div className="header">
         This is the home page!
       </div>
@@ -43,6 +47,8 @@ class Home extends Component {
 }
 
 export default withTracker(() => {
+  let currentUser = Meteor.user() ? Meteor.user() : {};
   return {
+    currentUser,
   };
-})(Home);
+})(HomePage);
