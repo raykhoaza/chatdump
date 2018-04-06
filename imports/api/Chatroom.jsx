@@ -4,11 +4,11 @@ import { Meteor } from 'meteor/meteor';
 export const Chatrooms = new Mongo.Collection('chatrooms');
 
 Meteor.methods({
-  'chatrooms.insert'(roomName) {
+  'chatrooms.insert'(roomName, ownerId) {
     Chatrooms.insert({
       roomName: roomName,
-      users: [],
-      roomCreator,
+      users: [ownerId],
+      ownerId: ownerId,
       createdAt: new Date()
     });
   }
